@@ -105,14 +105,18 @@ const App = () => {
   };
 
   const handleSort = (listName: "entries" | "results") => {
-    if (listName === "entries" && entries.length <= 1) return;
-    if (listName === "results" && results.length <= 1) return;
-
+    
     if (listName === "entries") {
+
+      if (entries.length <= 1) return;
+
       const temp = [...entries].sort((a, b) => a.entry.localeCompare(b.entry));
       setEntries(temp.map((item, i) => ({ ...item, index: i })));
       setText(temp.map((item) => item.entry).join("\n"));
     } else if (listName === "results") {
+
+      if (results.length <= 1) return;
+
       const temp = [...results].sort((a, b) =>
         a.result.localeCompare(b.result),
       );
@@ -156,6 +160,11 @@ const App = () => {
     setIsModalVisible(false);
   };
 
+  const hasDupelicate = (text: string) => {
+    const temp = entries.filter((item) => item.entry === text);
+    return temp.length > 1;
+  };
+
   return (
     <section className="relative grid h-[100vh] grid-cols-[2fr_1fr] max-xl:grid-cols-1 max-xl:grid-rows-[auto_1fr]">
       <Wheel
@@ -182,6 +191,7 @@ const App = () => {
             closeModal={handleCloseModal}
             removeAllFromList={removeAllFromList}
             removeFromList={removeFromList}
+            hasDupelicate={hasDupelicate}
           />
         </>
       )}

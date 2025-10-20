@@ -5,6 +5,7 @@ type WinnerModalProps = {
   closeModal: () => void;
   removeAllFromList: (text: string) => void;
   removeFromList: (index: number) => void;
+  hasDupelicate: (text: string) => boolean;
 };
 
 const WinnerModal = ({
@@ -12,7 +13,11 @@ const WinnerModal = ({
   closeModal,
   removeAllFromList,
   removeFromList,
+  hasDupelicate
 }: WinnerModalProps) => {
+
+
+
   return (
     <div className="bg-dark-secondary absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-start justify-center rounded-lg p-6 text-white">
       <h1 className="text-4xl">And the winner is...</h1>
@@ -26,9 +31,12 @@ const WinnerModal = ({
         <Button action={() => removeFromList(winner.index)} isFullWidth>
           Remove
         </Button>
-        <Button action={() => removeAllFromList(winner.result)} isFullWidth>
-          Remove All
-        </Button>
+
+        {hasDupelicate(winner.result) && (
+          <Button action={() => removeAllFromList(winner.result)} isFullWidth>
+            Remove All
+          </Button>
+        )}
       </div>
     </div>
   );

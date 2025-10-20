@@ -164,6 +164,9 @@ export default function Wheel({
   };
 
   const handleSpin = () => {
+
+    if (!safeLabels.length || safeLabels.length === 1) return;
+
     if (isSpinning) return;
     setIsSpinning(true);
 
